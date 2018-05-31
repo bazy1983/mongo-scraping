@@ -1,1 +1,31 @@
-<p>testing handlebars</p>
+<div class="articleButtons">
+    <div id="newArticles">
+        <p class = "buttonText">Display New Articles</p>
+
+        <div class="allArticles hidden">
+            {{#each stories from="0" to="10"}}
+            <div data={{id}} class="storyBox">
+                <div class="storyText">
+                    <a href={{storyURL}} target="_blank">
+                        <h2>
+                            {{headline}}
+                        </h2>
+                    </a>
+                    <p class="summary">
+                        {{summary}}
+                    </p>
+                </div>
+                <div class="image">
+                    <img src={{img}} alt={{id}}/>
+                </div>
+                <p>By: {{writer}}</p>
+                <p>{{storyDate}}</p>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div id="savedArticles">
+        <p class="buttonText">Display Saved Articles</p>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+body {
+    width: 98vw;
+    margin: 0px;
+    padding: 0px;
+    background: #f4f7f6;
+    background-image: url("../images/abstract.jpg");
+    overflow: scroll;
+}
+
+header {
+    margin: 0px;
+    padding: 0px;
+    background: #fff;
+    width: 98.5vw;
+    height: 75px;
+    border-bottom: 2px inset #6d7993;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-family: 'Kumar One Outline', cursive;
+    font-size: 36px;
+    padding-top: 10px; 
+    margin: 0px 5px;
+    float: left;
+}
+
+.saved {
+    float: right;
+    width: 200px;
+    height: 75px;
+    text-align: center;
+    font-size: 20px;
+    background: #6d7993
+}
+
+.saved p {
+    padding: 5px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.container {
+    margin: auto;
+    width: 90%;
+}
+
+.articleButtons{
+    text-align: center;
+    position: relative;
+}
+
+.articleButtons #newArticles, .articleButtons #savedArticles{
+    position: absolute;
+    width: 250px;
+    height: 75px;
+    overflow: hidden;
+    background: #96858F;
+    box-shadow: 10px 10px 10px rgb(87, 77, 83);
+    transition: 1s!important;
+    margin: 0px 30px;
+}
+
+#newArticles::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#newArticles::-webkit-scrollbar{
+    width: 12px;
+    height: 0px;
+	background-color: #F5F5F5;
+}
+
+#newArticles::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+#newArticles{
+    left: 250px;
+}
+
+#savedArticles {
+    left: 660px;
+}
+
+.expandView{
+    z-index: 2;
+    animation: expand 1s ease-in-out forwards;
+    overflow: scroll!important;
+}
+
+@keyframes expand {
+    25% {
+        left : 5px;
+        width: 250px;
+        height: 75px;
+    }
+    100% {
+        left: -20px;
+        width: 100%;
+        height: 82vh;
+        background: #fff
+    }
+}
+
+.articleButtons #newArticles , .articleButtons #savedArticles {
+    padding: 7px;
+    font-size: 20px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.buttonText{
+    text-align: center;
+    font-weight: bold;
+}
+
+.storyBox {
+    border: 1px solid #000;
+    margin: 10px 0px;
+}
+
+.storyText{
+    display: inline-block;
+    width: 69%;
+    margin-left: 10px;
+    text-align: left;
+}
+
+.storyText a, .summary{
+    text-decoration: none;
+
+}
+
+.summary {
+    font-size: 24px;
+}
+
+.image{
+    display: inline-block;
+    width: 28%;
+    text-align: center;
+}
+
+.image img {
+    transform: translateY(60px)
+}
+
+.hidden{
+    display: none;
+}

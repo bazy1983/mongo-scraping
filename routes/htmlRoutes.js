@@ -28,7 +28,7 @@ router.get("/", function(req, res){
             nyTimesStream.push({
                 id : streamId[i].attribs.id,
                 headline : storyHeadline[i].children[0].data.trim(),
-                summery : storySummary[i].children[0].data.trim(),
+                summary : storySummary[i].children[0].data.trim(),
                 writer : storyWriter[i].children[0].data.trim().slice(3), //remove "by " at the beggining
                 storyDate : storyDate[i].attribs.datetime,
                 img : img[i].attribs.src,
@@ -38,7 +38,7 @@ router.get("/", function(req, res){
         
         
 
-        res.send(nyTimesStream)
+        res.render("index", {stories : nyTimesStream})
     })
 })
 
