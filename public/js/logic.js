@@ -1,12 +1,22 @@
 $(document).ready(function(){
 
-    $("#newArticles").on("click", function(){
-        $(this).toggleClass("expandView")
-        $(".allArticles").toggleClass("hidden")
-        $("#newArticles .buttonText").toggleClass("hidden")
+    $(".buttonText").on("click", function(){
+        $("#newArticles").addClass("expandView")
+        $(".allArticles").removeClass("hidden")
+        $("#newArticles .buttonText").addClass("hidden")
     })
 
-    $("#savedArticles").on("click", function(){
-        $(this).toggleClass("expandView")
+    $(".fa-compress").on("click", function(){
+        $("#newArticles").removeClass("expandView")
+        $(".allArticles").addClass("hidden")
+        $("#newArticles .buttonText").removeClass("hidden")
+    })
+
+    $(".fa-bookmark").on("click", function(){
+        
+    })
+
+    $(".buttonText1").on("click", function(){
+        $("#savedArticles").addClass("expandView")
     })
 })

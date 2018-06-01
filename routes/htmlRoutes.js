@@ -18,18 +18,16 @@ router.get("/", function(req, res){
         let streamId = $(".stream li:not(.ad):not(.page-marker)");
         let storyHeadline = $("h2","div.stream ol li article");
         let storySummary = $("div.stream ol li article .summary");
-        let storyWriter = $("div.stream ol li article .byline");
+        //let storyWriter = $("div.stream ol li article p.byline");  <<this one is really bad idea
         let storyDate = $("div.stream ol li article time");
         let img = $("div.stream ol li article img");
         let storyURL = $("div.stream ol li article a");
 
         for(i = 0; i< streamId.length; i++){
-            
             nyTimesStream.push({
                 id : streamId[i].attribs.id,
                 headline : storyHeadline[i].children[0].data.trim(),
                 summary : storySummary[i].children[0].data.trim(),
-                writer : storyWriter[i].children[0].data.trim().slice(3), //remove "by " at the beggining
                 storyDate : storyDate[i].attribs.datetime,
                 img : img[i].attribs.src,
                 storyURL : storyURL[i].attribs.href
