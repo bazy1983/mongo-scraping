@@ -2,20 +2,24 @@ $(document).ready(function(){
 
     $(".buttonText").on("click", function(){
         // expand article div box, show articles, hide button text
-        $("#newArticles").addClass("expandView")
-        $(".allArticles").removeClass("hidden")
-        $("#newArticles .buttonText").addClass("hidden")
+        $("#newArticles").addClass("expandView");
+        $(".allArticles").removeClass("hidden");
+        $(this).addClass("hidden");
     })
 
     $(".fa-compress").on("click", function(){
         // contract the article div box, hide articles, show button text
-        $("#newArticles").removeClass("expandView")
-        $(".allArticles").addClass("hidden")
-        $("#newArticles .buttonText").removeClass("hidden")
+        $(this).addClass("hidden")
+        $("#newArticles").removeClass("expandView");
+        $("#savedArticles").removeClass("expandView");
+        $(".allArticles").addClass("hidden");
+        $(".allSavedArticles").addClass("hidden");
+        $("#newArticles .buttonText").removeClass("hidden");
+        $("#savedArticles .buttonText1").removeClass("hidden");
     })
 
     $(".fa-bookmark").on("click", function(){
-        $(this).css("color" , "#F00")
+        let bookmark = $(this) //used to change bookmark color when clicked
         // construct article object to be saved in db
         let saveArticle = {
             articleID : $(this).parent().attr("data"),
@@ -25,11 +29,38 @@ $(document).ready(function(){
             image : $(this).next().children("img").attr("src")
         }
         $.post("/api/addArticle", saveArticle, function(data){
-            console.log(data)
+            bookmark.css("color", "#f00")
+
         })
+        .fail(function(err){
+            bookmark.css("color", "#0f0")
+
+        })
+         
     })
 
     $(".buttonText1").on("click", function(){
-        $("#savedArticles").addClass("expandView")
+        $(".fa-compress").removeClass("hidden");
+        $("#savedArticles").addClass("expandView");
+        $(".allSavedArticles").removeClass("hidden");
+        $(this).addClass("hidden");
+        $.get("/api/getArticles", function(data){
+            $(".allSavedArticles").empty();
+            console.log(data)
+            $.each(data, function(i, obj){
+                let oneArticle = $(`<div data = '${obj.articleID}' class = 'storyBox'>`);
+                let articleBox = $(`<div class = 'storyText'>`);
+                let articleLink = $(`<a href = '${obj.url}' target = '_blank'>`);
+                let articleHead = $(`<h2>`).text(obj.headline);
+                articleLink.append(articleHead);
+                articleBox.append(articleLink);//
+                let articleText = $(`<div class = 'image'>`);
+                let articleSummary = $(`<p class = 'summary'>`).text(obj.summary);
+                let articleImg = $(`<img src = '${obj.image}' alt = '${obj.articleID}'>`);
+                articleText.append(articleSummary, articleImg);//
+                oneArticle.append(articleBox, articleText);
+                $(".allSavedArticles").append(oneArticle)
+            })
+        })
     })
 })
