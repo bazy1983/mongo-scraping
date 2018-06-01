@@ -7,7 +7,6 @@ router.get("/", function(req, res){
 })
 
 router.post("/addArticle", function(req, res){
-    
     Article.create(req.body)
     .then(function(data){
         res.send(data)

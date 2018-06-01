@@ -161,6 +161,7 @@ header {
     right: 10px;
     font-size: 63px;
     top: -5px;
+    cursor: pointer;
 }
 
 .fa-compress {

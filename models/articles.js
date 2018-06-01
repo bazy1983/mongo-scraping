@@ -20,7 +20,9 @@ var ArticleSchema = new Schema({
     createdAt : {
         type : Date,
         default : Date.now
-
+    },
+    image : {
+        type : String,
     },
     hasComment : {
         type : Boolean,
