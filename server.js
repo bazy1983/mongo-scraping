@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 const app = express();
 
 //connect to mongodb
-mongoose.connect("mongodb://localhost/userArticle");
+let mongoConnect = process.env.MONGOLAB_URI ||"mongodb://localhost/userArticle"
+mongoose.connect(mongoConnect);
 mongoose.Promise = global.Promise;
 
 let port = process.env.port || 3000;
