@@ -20,16 +20,21 @@ router.get("/", function(req, res){
         let storySummary = $("div.stream ol li article .summary");
         //let storyWriter = $("div.stream ol li article p.byline");  <<this one is really bad idea
         let storyDate = $("div.stream ol li article time");
-        let img = $("div.stream ol li article img");
+        let img = $("div.stream ol li article img") // some links don't have images
         let storyURL = $("div.stream ol li article a");
-
         for(i = 0; i< streamId.length; i++){
+            let imgLink;
+            if (img[i]) {
+                imgLink = img[i].attribs.src;
+            } else {
+                imgLink = "https://placehold.it/150"
+            }
             nyTimesStream.push({
                 id : streamId[i].attribs.id,
                 headline : storyHeadline[i].children[0].data.trim(),
                 summary : storySummary[i].children[0].data.trim(),
                 storyDate : storyDate[i].attribs.datetime,
-                img : img[i].attribs.src,
+                img : imgLink,
                 storyURL : storyURL[i].attribs.href
             })
         }
