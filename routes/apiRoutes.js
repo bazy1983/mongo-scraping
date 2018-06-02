@@ -30,5 +30,13 @@ router.get("/getArticles", function(req, res){
     })
 })
 
+router.delete("/deleteArticle", function(req, res){
+    Article.deleteOne(req.body)
+    .then(function(){
+        res.status(200).end();
+    })
+
+})
+
 
 module.exports = router

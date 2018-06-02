@@ -183,6 +183,10 @@ header {
     }
 }
 
+#savedArticles i {
+    cursor: pointer;
+}
+
 .commentBox{
     margin-top: 10px;
     text-align: left;
@@ -209,6 +213,7 @@ header {
 textarea {
     width: 100%;
     height: 50px;
+    margin-top: 7px;
 }
 
 .hidden{
