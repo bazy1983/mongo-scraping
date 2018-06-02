@@ -59,52 +59,93 @@ $(document).ready(function () {
                 let articleImg = $(`<img src = '${obj.image}' alt = '${obj.articleID}'>`);
                 articleText.append(articleSummary, articleImg);//
                 let commentbox = $(`<div class = 'commentBox'>`);
-                let comment = $(`
-                <div class = 'comment'>
-                <textarea></textarea>
-                <p class = 'hidden'>${obj.comment}</p>
-                </div>
-                <div class = 'controls'>
-                <i class="fas fa-save" data='${obj.articleID}'></i>
-                <br>
-                <i class="fas fa-eraser hidden" data='${obj.articleID}'></i>`);
+
+                // if comment is saved, show comment, edit button and delete button
+                // and hide  textarea input and save button
+                let comment = ""
+                if (obj.hasComment) {
+                    comment = $(`
+                        <div class = 'comment'>
+                            <textarea class = 'hidden'></textarea>
+                            <p>${obj.comment}</p>
+                        </div>
+                        <div class = 'controls'>
+                            <i class="fas fa-edit" data='${obj.articleID}'></i>
+                            <br>
+                            <i class="fas fa-eraser" data='${obj.articleID}'></i>
+                        </div>`);
+                } else {
+                    // if comment is not saved, show textarea input and save button
+                    // and hide comment, edit button and delete button
+                    comment = $(`
+                        <div class = 'comment'>
+                            <textarea></textarea>
+                            <p class = 'hidden'>${obj.comment}</p>
+                        </div>
+                        <div class = 'controls'>
+                            <i class="fas fa-save" data='${obj.articleID}'></i>
+                            <br>
+                            <i class="fas fa-eraser hidden" data='${obj.articleID}'></i>
+                        </div>`);
+                }
                 commentbox.append(comment)
                 oneArticle.append(articleBox, articleText, commentbox);
-                $(".allSavedArticles").append(oneArticle)
-                if (obj.hasComment) {
-                    $(".comment textarea").addClass("hidden");
-                    $(".comment p").removeClass("hidden");
-                    $(".fa-eraser").removeClass("hidden")
-                }
+                $(".allSavedArticles").append(oneArticle);
             })
         })
 
         $("#savedArticles").on("click", "i", function () {
-            let clicked = $(this)
-            let iconClass = $(this).attr("class");
-            let id = $(this).attr("data")
+            var clicked = $(this);
+            let iconClass = clicked.attr("class");
+            let id = clicked.attr("data")
             switch (iconClass) {
                 case "fas fa-times":
                     $.ajax({
                         url: "/api/deleteArticle",
-                        data: {articleID : id},
+                        data: { articleID: id },
                         method: "DELETE"
                     })
-                    .done(function(){
-                        clicked.parent().parent().remove();
-                    })
+                        .done(function () {
+                            clicked.parent().parent().remove();
+                        })
                     break;
                 case "fas fa-save":
-                let newComment = $("textarea").val().trim();
-                $.ajax({
-                    url: "/api/comment",
-                    data : {articleID : id, 
-                        hasComment : true, 
-                        comment : newComment
-                    },
-                    method : "UPDATE"
-                })
-                break;
+                    var newComment = clicked.parent().siblings(".comment").children("textarea").val().trim();
+                    $.ajax({
+                        url: "/api/comment",
+                        data: {
+                            articleID: id,
+                            comment: newComment
+                        },
+                        method: "PUT"
+                    })
+                        .done(function () {
+                            clicked.addClass("fa-edit").removeClass("fa-save");
+                            clicked.siblings().removeClass("hidden")
+                            clicked.parent().siblings(".comment").children("textarea").addClass("hidden");
+                            clicked.parent().siblings(".comment").children("p").removeClass("hidden").text(newComment);
+                        })
+                    break;
+                case "fas fa-eraser":
+                    $.ajax({
+                        url: "/api/deleteComment",
+                        data: { articleID: id },
+                        method: "DELETE"
+                    })
+                        .done(function () {
+                            clicked.parent().siblings(".comment").children("textarea").removeClass("hidden");
+                            clicked.parent().siblings(".comment").children("p").addClass("hidden");
+                            clicked.prev().prev().addClass("fa-save").removeClass("fa-edit");
+                            clicked.addClass("hidden")
+                        })
+                    break;
+                case "fas fa-edit":
+                    //click edit, change edit button to save, hide p tag, show textarea with text from p tag
+                    let savedComment = clicked.parent().siblings(".comment").children("p").text();
+                    clicked.addClass("fa-save").removeClass("fa-edit");
+                    clicked.parent().siblings(".comment").children("p").addClass("hidden");
+                    clicked.parent().siblings(".comment").children("textarea").removeClass("hidden").val(savedComment);
+                    break;
             }
         })
     })

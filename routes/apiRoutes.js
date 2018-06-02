@@ -35,7 +35,41 @@ router.delete("/deleteArticle", function(req, res){
     .then(function(){
         res.status(200).end();
     })
+    .catch(function(err){
+        console.log("couldn't save new comment")
+        console.log(err)
+    })
 
+})
+
+router.put("/comment", function(req, res){
+    Article.updateOne({
+        articleID : req.body.articleID
+    },{
+        hasComment : true,
+        comment : req.body.comment
+    })
+    .then(function(){
+        res.status(200).end();
+    })
+    .catch(function(err){
+        console.log("adding new comment not successful");
+        console.log(err);
+    })
+})
+
+router.delete("/deleteComment", function(req, res){
+    Article.updateOne(req.body, {
+        comment : "",
+        hasComment : false
+    })
+    .then(function(){
+        res.status(200).end()
+    })
+    .catch(function(err){
+        console.log("something went wrong while removing comment");
+        console.log(err)
+    })
 })
 
 
