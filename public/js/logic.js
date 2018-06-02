@@ -52,15 +52,36 @@ $(document).ready(function(){
                 let articleBox = $(`<div class = 'storyText'>`);
                 let articleLink = $(`<a href = '${obj.url}' target = '_blank'>`);
                 let articleHead = $(`<h2>`).text(obj.headline);
+                let articleDelete = $(`<i class="fas fa-times"></i>`);
                 articleLink.append(articleHead);
-                articleBox.append(articleLink);//
+                articleBox.append(articleLink, articleDelete);//
                 let articleText = $(`<div class = 'image'>`);
                 let articleSummary = $(`<p class = 'summary'>`).text(obj.summary);
                 let articleImg = $(`<img src = '${obj.image}' alt = '${obj.articleID}'>`);
-                articleText.append(articleSummary, articleImg);//
-                oneArticle.append(articleBox, articleText);
+                articleText.append(articleSummary ,articleImg);//
+                let commentbox = $(`<div class = 'commentBox'>`);
+                let comment = $(`
+                <div class = 'comment'>
+                <textarea></textarea>
+                <p class = 'hidden'>${obj.comment}</p>
+                </div>
+                <div class = 'controls'>
+                <i class="fas fa-edit"></i>
+                <br>
+                <i class="fas fa-eraser"></i>`);
+                commentbox.append(comment)
+                oneArticle.append(articleBox, articleText, commentbox);
                 $(".allSavedArticles").append(oneArticle)
+                if (obj.hasComment){
+                    $(".comment textarea").addClass("hidden")
+                    $(".comment p").removeClass("hidden")
+                }
             })
+        })
+
+        $("#savedArticles").on("click", "i", function(){
+             var iconClass = $(this).attr("class");
+             console.log(iconClass)
         })
     })
 })
