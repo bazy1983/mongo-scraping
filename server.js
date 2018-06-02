@@ -9,7 +9,7 @@ let mongoConnect = process.env.MONGODB_URI ||"mongodb://localhost/userArticle"
 mongoose.connect(mongoConnect);
 mongoose.Promise = global.Promise;
 
-let port = process.env.port || 3000;
+let port = process.env.PORT || 3000;
 
 let htmlRoutes = require("./routes/htmlRoutes");
 let apiRoutes = require("./routes/apiRoutes");
