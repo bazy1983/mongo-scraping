@@ -133,7 +133,7 @@ $(document).ready(function () {
                         method: "DELETE"
                     })
                         .done(function () {
-                            clicked.parent().siblings(".comment").children("textarea").removeClass("hidden");
+                            clicked.parent().siblings(".comment").children("textarea").removeClass("hidden").val("");
                             clicked.parent().siblings(".comment").children("p").addClass("hidden");
                             clicked.prev().prev().addClass("fa-save").removeClass("fa-edit");
                             clicked.addClass("hidden")
