@@ -15,29 +15,19 @@ router.get("/", function(req, res){
             normalizeWhitespace: true,
             xmlMode: true
         })
-        let streamId = $(".stream li:not(.ad):not(.page-marker)");
-        let storyHeadline = $("h2","div.stream ol li article");
-        let storySummary = $("div.stream ol li article .summary");
-        //let storyWriter = $("div.stream ol li article p.byline");  <<this one is really bad idea
-        let storyDate = $("div.stream ol li article time");
-        let img = $("div.stream ol li article img") // some links don't have images
-        let storyURL = $("div.stream ol li article a");
-        for(i = 0; i< streamId.length; i++){
-            let imgLink;
-            if (img[i]) {
-                imgLink = img[i].attribs.src;
-            } else {
-                imgLink = "https://placehold.it/150"
-            }
+        let stream = $(".stream li:not(.ad):not(.page-marker)");
+        stream.each(function(i, item){
             nyTimesStream.push({
-                id : streamId[i].attribs.id,
-                headline : storyHeadline[i].children[0].data.trim(),
-                summary : storySummary[i].children[0].data.trim(),
-                storyDate : storyDate[i].attribs.datetime,
-                img : imgLink,
-                storyURL : storyURL[i].attribs.href
+                id : $(item).attr("id"),
+                headline : $(item).children().children(".story-body").children().children(".story-meta").children("h2").text().trim(),
+                summary : $(item).children().children(".story-body").children().children(".story-meta").children(".summary").text().trim(),
+                storyDate : $(item).children().children(".story-footer").children().text().trim(),
+                img : $(item).children().children(".story-body").children().children(".wide-thumb").children().attr("src"),
+                storyURL : $(item).children().children(".story-body").children().attr("href"),
+                author : $(item).children().children(".story-body").children().children(".story-meta").children(".byline").text().trim()
             })
-        }
+        
+        })
         
         
 
