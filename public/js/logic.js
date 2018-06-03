@@ -90,7 +90,7 @@ $(document).ready(function () {
                 }
                 commentbox.append(comment)
                 oneArticle.append(articleBox, articleText, commentbox);
-                $(".allSavedArticles").append(oneArticle);
+                $(".allSavedArticles").prepend(oneArticle);
             })
         })
 

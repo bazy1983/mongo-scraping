@@ -17,9 +17,17 @@
                     <p class="summary">
                         {{summary}}
                     </p>
+                    {{#if img}}
                     <img src={{img}} alt={{id}}/>
+                    {{else}}
+                    <img src="http://eazysupplies.com/productimages/no-preview.jpg?width=200" alt = "no preview"/>
+                    {{/if}}
                 </div>
+                {{#if author}}
                 <p>{{author}}</p>
+                {{else}}
+                <p>Unknown Author</p>
+                {{/if}}
                 <p>{{storyDate}}</p>
             </div>
             {{/each}}
